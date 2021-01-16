@@ -1,15 +1,21 @@
 // DOM Elements
 const guideList = document.querySelector(".guides");
-
 const loggedOutLinks = document.querySelectorAll(".logged-out");
 const loggedInLinks = document.querySelectorAll(".logged-in");
+const accountDetails = document.querySelector(".account-details");
 
 const setupUI = (user) => {
   if (user) {
+    // account info
+    const html = `<div>logged in as ${user.email}</div>`;
+    accountDetails.innerHTML = html;
     //toggle ui elements
     loggedInLinks.forEach((item) => (item.style.display = "block"));
     loggedOutLinks.forEach((item) => (item.style.display = "none"));
   } else {
+    // Hide account info
+    accountDetails.innerHTML = "";
+    //toggle ui elements
     //toggle ui elements
     loggedInLinks.forEach((item) => (item.style.display = "none"));
     loggedOutLinks.forEach((item) => (item.style.display = "block"));

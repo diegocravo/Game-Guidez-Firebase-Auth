@@ -1,11 +1,23 @@
+const usuario = {
+  email: "",
+  data: "",
+};
+
 // listen for auth status changes
 auth.onAuthStateChanged((user) => {
   if (user) {
-    db.collection("guides").onSnapshot((snapshot) => {
-      setupGuides(snapshot.docs);
-      setupUI(user);
-    });
+    console.log(user);
+    usuario.email = user.email;
+    db.collection("guides")
+      .onSnapshot((snapshot) => {
+        setupGuides(snapshot.docs);
+        setupUI(user);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   } else {
+    usuario.email = "";
     setupUI();
     setupGuides([]);
   }
@@ -20,6 +32,7 @@ createForm.addEventListener("submit", (e) => {
     .add({
       title: createForm.title.value,
       content: createForm["content"].value,
+      email: usuario.email,
     })
     .then(() => {
       //close modal and reset form
